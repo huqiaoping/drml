@@ -18,10 +18,10 @@ Copy all *\*.cpp/\**.cu  files into *src/caffe/layers/
 Copy all *\*.hpp*  files into *include/caffe/layers/
 
 
-Replace the old *src/caffe/proto/caffe*.proto with the new one given.
+Replace the old *src/caffe/proto/caffe.proto* with the new one given.
 
 3, Recompile caffe
 
-**make clean
+*make clean
 
-**make  all
+*make  all
