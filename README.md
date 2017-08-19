@@ -9,10 +9,19 @@ Please compare caffe.proto-org and caffe.proto to see differences.(You can use a
 
 Usage:
 1, Download caffe from https://github.com/BVLC/caffe. Be sure to install caffe correctly.
+
 2, Copy files.
-Copy all *.cpp/*.cu  files into src/caffe/layers/
-Copy all *.hpp  files into include/caffe/layers/
+
+Copy all *\*.cpp/\**.cu  files into **src/caffe/layers/ 
+
+
+Copy all *\*.hpp*  files into **include/caffe/layers/
+
+
 Replace the old src/caffe/proto/caffe.proto with the new one given.
+
 3, Recompile caffe
-make clean
-make  all
+
+**make clean
+
+**make  all
