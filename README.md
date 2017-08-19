@@ -1,5 +1,5 @@
 # drml
-Org link from Kaili Zhao: https://github.com/zkl20061823/DRML
+Original link from Kaili Zhao: https://github.com/zkl20061823/DRML
 
 I changed these files to make them fit the new caffe version. (It's OK now for caffe version: https://github.com/BVLC/caffe 2017/8/19)
 
@@ -12,16 +12,16 @@ Usage:
 
 2, Copy files.
 
-Copy all *\*.cpp/\**.cu  files into *src/caffe/layers/ 
+Copy all *\*.cpp/\*.cu*  files into *src/caffe/layers/*
 
 
-Copy all *\*.hpp*  files into *include/caffe/layers/
+Copy all *\*.hpp*  files into *include/caffe/layers/*
 
 
 Replace the old *src/caffe/proto/caffe.proto* with the new one given.
 
 3, Recompile caffe
 
-*make clean
+*make clean*
 
-*make  all
+*make  all*
