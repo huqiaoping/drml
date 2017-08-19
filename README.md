@@ -8,6 +8,7 @@ Please compare caffe.proto-org and caffe.proto to see differences.(You can use a
 
 
 Usage:
+
 1, Download caffe from https://github.com/BVLC/caffe. Be sure to install caffe correctly.
 
 2, Copy files.
