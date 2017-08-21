@@ -11,36 +11,7 @@
 #include "caffe/layers/sigmoid_layer.hpp"
 
 namespace caffe {
-
-/**
- * @brief Computes the cross-entropy (logistic) loss @f$
- *          E = \frac{-1}{n} \sum\limits_{n=1}^N \left[
- *                  p_n \log \hat{p}_n +
- *                  (1 - p_n) \log(1 - \hat{p}_n)
- *              \right]
- *        @f$, often used for predicting targets interpreted as probabilities.
- *
- * This layer is implemented rather than separate
- * SigmoidLayer + CrossEntropyLayer
- * as its gradient computation is more numerically stable.
- * At test time, this layer can be replaced simply by a SigmoidLayer.
- *
- * @param bottom input Blob vector (length 2)
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the scores @f$ x \in [-\infty, +\infty]@f$,
- *      which this layer maps to probability predictions
- *      @f$ \hat{p}_n = \sigma(x_n) \in [0, 1] @f$
- *      using the sigmoid function @f$ \sigma(.) @f$ (see SigmoidLayer).
- *   -# @f$ (N \times C \times H \times W) @f$
- *      the targets @f$ y \in [0, 1] @f$
- * @param top output Blob vector (length 1)
- *   -# @f$ (1 \times 1 \times 1 \times 1) @f$
- *      the computed cross-entropy loss: @f$
- *          E = \frac{-1}{n} \sum\limits_{n=1}^N \left[
- *                  p_n \log \hat{p}_n + (1 - p_n) \log(1 - \hat{p}_n)
- *              \right]
- *      @f$
- */
+//add multi_label sigmoidcrossentropy loss
 template <typename Dtype>
 class MultiSigmoidCrossEntropyLossLayer : public LossLayer<Dtype> {
  public:
@@ -61,7 +32,6 @@ class MultiSigmoidCrossEntropyLossLayer : public LossLayer<Dtype> {
       const vector<Blob<Dtype>*>& top);
   virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
-
   /**
    * @brief Computes the sigmoid cross-entropy loss error gradient w.r.t. the
    *        predictions.
@@ -97,13 +67,6 @@ class MultiSigmoidCrossEntropyLossLayer : public LossLayer<Dtype> {
   virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
       const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 
-  /// Read the normalization mode parameter and compute the normalizer based
-  /// on the blob size.  If normalization_mode is VALID, the count of valid
-  /// outputs will be read from valid_count, unless it is -1 in which case
-  /// all outputs are assumed to be valid.
-  virtual Dtype get_normalizer(
-      LossParameter_NormalizationMode normalization_mode, int valid_count);
-
   /// The internal SigmoidLayer used to map predictions to probabilities.
   shared_ptr<SigmoidLayer<Dtype> > sigmoid_layer_;
   /// sigmoid_output stores the output of the SigmoidLayer.
@@ -112,15 +75,6 @@ class MultiSigmoidCrossEntropyLossLayer : public LossLayer<Dtype> {
   vector<Blob<Dtype>*> sigmoid_bottom_vec_;
   /// top vector holder to call the underlying SigmoidLayer::Forward
   vector<Blob<Dtype>*> sigmoid_top_vec_;
-
-  /// Whether to ignore instances with a certain label.
-  bool has_ignore_label_;
-  /// The label indicating that an instance should be ignored.
-  int ignore_label_;
-  /// How to normalize the loss.
-  LossParameter_NormalizationMode normalization_;
-  Dtype normalizer_;
-  int outer_num_, inner_num_;
 };
 
 }  // namespace caffe
